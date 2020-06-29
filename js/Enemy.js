@@ -21,6 +21,7 @@ class Enemy {
 
     // The x position of the enemy is determined by its width and its spot. We need this information for the lifetime
     // of the instance, so we make it a property of the instance. (Why is this information needed for the lifetime of the instance?)
+
     this.x = enemySpot * ENEMY_WIDTH;
 
     // The y position is initially less than 0 so that the enemies fall from the top. This data is stored as a property
@@ -64,7 +65,6 @@ class Enemy {
     // the destroyed property to indicate that the enemy should no longer be in play
     if (this.y > GAME_HEIGHT) {
       this.root.removeChild(this.domElement);
-
       this.destroyed = true;
     }
   }

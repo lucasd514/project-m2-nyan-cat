@@ -27,7 +27,7 @@ let onClick = function (event) {
   document.addEventListener("keydown", keydownHandler);
 };
 
-//start button
+//start button + score
 const here = document.getElementById("app");
 const startBtn = document.createElement("button");
 startBtn.style.position = "absolute";

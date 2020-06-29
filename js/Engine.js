@@ -15,7 +15,14 @@ class Engine {
     // that contains instances of the Enemy class
     this.enemies = [];
 
+    this.enemiesKilled = 0;
+
     this.invincibleEnd = 0;
+
+    this.score = new Text(this.root, 0, 0);
+
+    this.livesleft = new Text(this.root, 250, 0);
+
     // We add the background image to the game
     addBackground(this.root);
   }
@@ -35,9 +42,13 @@ class Engine {
     let timeDiff = new Date().getTime() - this.lastFrame;
 
     this.lastFrame = new Date().getTime();
+    //score
+    this.score.update("score: " + this.enemiesKilled);
+    this.livesleft.update("lives: " + this.player.livesleft);
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
     this.enemies.forEach((enemy) => {
+      console.log("enemy", enemy);
       enemy.update(timeDiff);
     });
 
@@ -45,6 +56,9 @@ class Engine {
     // We use filter to accomplish this.
     // Remember: this.enemies only contains instances of the Enemy class.
     this.enemies = this.enemies.filter((enemy) => {
+      if (enemy.destroyed) {
+        this.enemiesKilled++;
+      }
       return !enemy.destroyed;
     });
 
@@ -62,6 +76,7 @@ class Engine {
       startBtn.innerHTML = "Start Over!";
       document.removeEventListener("keydown", keydownHandler);
       this.player.livesleft = 3;
+      this.enemiesKilled = 0;
       return;
     }
 
@@ -100,7 +115,6 @@ class Engine {
       ) {
         const currentTime = new Date().getTime();
         const notInvincible = this.invincibleEnd <= currentTime;
-        console.log("notinvincible", notInvincible);
         if (notInvincible) {
           this.invincibleEnd = currentTime + 1000;
           this.player.livesleft += -1;
