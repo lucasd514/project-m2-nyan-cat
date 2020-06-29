@@ -14,6 +14,8 @@ class Engine {
     // Initially, we have no enemies in the game. The enemies property refers to an array
     // that contains instances of the Enemy class
     this.enemies = [];
+
+    this.invincibleEnd = 0;
     // We add the background image to the game
     addBackground(this.root);
   }
@@ -57,7 +59,9 @@ class Engine {
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
-      window.alert("Game over");
+      startBtn.innerHTML = "Start Over!";
+      document.removeEventListener("keydown", keydownHandler);
+      this.player.livesleft = 3;
       return;
     }
 
@@ -84,18 +88,29 @@ class Engine {
       let enemyRight = this.enemies[i].x + ENEMY_WIDTH;
       let enemyTop = this.enemies[i].y;
       let enemyBot = this.enemies[i].y + ENEMY_HEIGHT;
-      console.log("playerLeft < enemyRight", playerLeft, enemyRight);
-      console.log("playerRight > enemyLeft", playerRight, enemyLeft);
-      console.log("playerTop < enemyBot", playerTop, enemyBot);
-      console.log("playerBot > enemyTop", playerBot, enemyTop);
+      // console.log("playerLeft < enemyRight", playerLeft, enemyRight);
+      // console.log("playerRight > enemyLeft", playerRight, enemyLeft);
+      // console.log("playerTop < enemyBot", playerTop, enemyBot);
+      // console.log("playerBot > enemyTop", playerBot, enemyTop);
       if (
         playerLeft < enemyRight &&
         playerRight > enemyLeft &&
         playerTop < enemyBot &&
         playerBot > enemyTop
       ) {
-        console.log("hit");
-        return true;
+        const currentTime = new Date().getTime();
+        const notInvincible = this.invincibleEnd <= currentTime;
+        console.log("notinvincible", notInvincible);
+        if (notInvincible) {
+          this.invincibleEnd = currentTime + 1000;
+          this.player.livesleft += -1;
+          console.log(this.player.livesleft);
+
+          if (this.player.livesleft <= 0) {
+            console.log("bigmac dead");
+            return true;
+          }
+        }
       }
     }
     return false;
