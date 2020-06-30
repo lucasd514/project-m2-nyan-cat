@@ -122,6 +122,10 @@ class Engine {
         if (notInvincible) {
           this.invincibleEnd = currentTime + 1000;
           this.player.livesleft += -1;
+          this.player.domElement.src = "../images/wwham.png";
+          setTimeout(() => {
+            this.player.domElement.src = "../images/jorgemiguel.png";
+          }, 1000);
           console.log(this.player.livesleft);
 
           if (this.player.livesleft <= 0) {
