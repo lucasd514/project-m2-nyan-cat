@@ -76,7 +76,8 @@ class Engine {
       startBtn.innerHTML = "Start Over!";
       document.removeEventListener("keydown", keydownHandler);
       this.player.livesleft = 3;
-      this.enemiesKilled = 0;
+      this.enemiesKilled = -3;
+      music.pause();
       return;
     }
 
@@ -121,7 +122,7 @@ class Engine {
           console.log(this.player.livesleft);
 
           if (this.player.livesleft <= 0) {
-            console.log("bigmac dead");
+            console.log("you killed george michael");
             return true;
           }
         }
