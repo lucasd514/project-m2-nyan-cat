@@ -19,9 +19,11 @@ class Engine {
 
     this.invincibleEnd = 0;
 
-    this.score = new Text(this.root, 0, 0);
+    this.score = new Text(this.root, 7, 0);
 
-    this.livesleft = new Text(this.root, 250, 0);
+    this.livesleft = new Text(this.root, 7, 20);
+
+    this.wham = new Text(this.root, 175, 175);
 
     // We add the background image to the game
     addBackground(this.root);
@@ -42,9 +44,9 @@ class Engine {
     let timeDiff = new Date().getTime() - this.lastFrame;
 
     this.lastFrame = new Date().getTime();
-    //score
-    this.score.update("score: " + this.enemiesKilled);
-    this.livesleft.update("lives: " + this.player.livesleft);
+    //score + lives
+    this.score.update("Score: " + this.enemiesKilled);
+    this.livesleft.update("Lives: " + this.player.livesleft);
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
     this.enemies.forEach((enemy) => {
@@ -73,7 +75,7 @@ class Engine {
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
-      startBtn.innerHTML = "Start Over!";
+      startBtn.innerHTML = "You Lose! click to play again";
       document.removeEventListener("keydown", keydownHandler);
       this.player.livesleft = 3;
       this.enemiesKilled = -3;
@@ -116,6 +118,7 @@ class Engine {
       ) {
         const currentTime = new Date().getTime();
         const notInvincible = this.invincibleEnd <= currentTime;
+
         if (notInvincible) {
           this.invincibleEnd = currentTime + 1000;
           this.player.livesleft += -1;

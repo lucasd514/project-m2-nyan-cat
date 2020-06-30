@@ -23,7 +23,7 @@ const keydownHandler = (event) => {
 let onClick = function (event) {
   console.log(event.target);
   gameEngine.gameLoop();
-  startBtn.innerHTML = "dodge the cats!";
+  startBtn.innerHTML = "Avoid the sax!";
   music.play();
   document.addEventListener("keydown", keydownHandler);
 };
@@ -32,7 +32,11 @@ let onClick = function (event) {
 const here = document.getElementById("app");
 const startBtn = document.createElement("button");
 startBtn.style.position = "absolute";
-startBtn.style.left = 2.3 * PLAYER_WIDTH;
+startBtn.style.left = 2.66 * PLAYER_WIDTH;
+startBtn.style.backgroundColor = "transparent";
+startBtn.style.color = "white";
+startBtn.style.border = "1px solid black";
+startBtn.style.borderRadius = "28px";
 startBtn.innerHTML = "start!";
 here.append(startBtn);
 
