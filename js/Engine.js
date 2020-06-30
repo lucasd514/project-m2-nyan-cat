@@ -21,7 +21,7 @@ class Engine {
 
     this.score = new Text(this.root, 7, 0);
 
-    this.livesleft = new Text(this.root, 7, 20);
+    this.livesleft = new Text(this.root, 7, 25);
 
     this.wham = new Text(this.root, 175, 175);
 
@@ -46,7 +46,7 @@ class Engine {
     this.lastFrame = new Date().getTime();
     //score + lives
     this.score.update("Score: " + this.enemiesKilled);
-    this.livesleft.update("Lives: " + this.player.livesleft);
+    this.livesleft.update("Lives left: " + (this.player.livesleft - 1));
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
     this.enemies.forEach((enemy) => {
@@ -120,8 +120,8 @@ class Engine {
         const notInvincible = this.invincibleEnd <= currentTime;
 
         if (notInvincible) {
-          this.invincibleEnd = currentTime + 1000;
           this.player.livesleft += -1;
+          this.invincibleEnd = currentTime + 1000;
           this.player.domElement.src = "../images/wwham.png";
           setTimeout(() => {
             this.player.domElement.src = "../images/jorgemiguel.png";
